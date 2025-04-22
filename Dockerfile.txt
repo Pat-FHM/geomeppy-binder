@@ -1,0 +1,21 @@
+# Start mit einem offiziellen Python 3.8 Docker-Image
+FROM python:3.8-slim
+
+# Setze das Arbeitsverzeichnis innerhalb des Containers
+WORKDIR /app
+
+# Kopiere alle Dateien aus dem Repository in den Container
+COPY . /app
+
+# Installiere alle Python-Abhängigkeiten
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+# Stelle sicher, dass Jupyter im Container läuft
+RUN pip install notebook
+
+# Binde den Port für den Jupyter-Server
+EXPOSE 8888
+
+# Start des Jupyter-Notebooks
+CMD ["jupyter", "notebook", "--ip='*'", "--port=8888", "--no-browser"]
